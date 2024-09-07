@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URI = 'https://file-share-be.vercel.app';
+const API_URI = 'https://file-share-cn1a.onrender.com';
 
 export const uploadFile = async (data) => {
     try {

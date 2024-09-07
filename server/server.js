@@ -16,7 +16,7 @@ const __dirname = path.resolve();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https:"],
+    origin: ["http://localhost:3000", "https://file-share-cn1a.onrender.com"],
     credentials: true,
   })
 );
