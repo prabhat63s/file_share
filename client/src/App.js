@@ -3,11 +3,10 @@ import './App.css';
 import { uploadFile } from './service/api';
 
 function App() {
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const [result, setResult] = useState('');
 
   const fileInputRef = useRef();
-
 
   useEffect(() => {
     const getImage = async () => {
@@ -21,10 +20,20 @@ function App() {
       }
     }
     getImage();
-  }, [file])
+  }, [file]);
 
   const onUploadClick = () => {
     fileInputRef.current.click();
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(result)
+      .then(() => {
+        alert('Link copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
   }
 
   return (
@@ -33,17 +42,22 @@ function App() {
         <h1>EasyShare</h1>
         <p>Upload and share the download link.</p>
         
-        <button onClick={() => onUploadClick()}>Upload</button>
+        <button onClick={onUploadClick}>Upload</button>
 
-        <p>Click the link to download.</p>
+        {result && (
+          <>
+            <p>Click the link to download.</p>
+            <a href={result} target='_blank' rel="noreferrer">{result}</a>
+            <button onClick={copyToClipboard} className="copy-button">Copy Link</button>
+          </>
+        )}
+
         <input
           type="file"
           ref={fileInputRef}
           style={{ display: "none" }}
           onChange={(e) => setFile(e.target.files[0])}
         />
-
-        <a href={result} target='_blank' rel="noreferrer">{result}</a> 
       </div>
     </div>
   );
